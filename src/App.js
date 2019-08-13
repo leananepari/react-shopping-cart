@@ -20,8 +20,9 @@ function App() {
     })
   }, [cart])
 
-	const addItem = item => {
+	const addItem = (item, quantity) => {
     if(!cart.includes(item)) {
+      item.quantity = quantity ? quantity : 1;
       setCart([...cart, item]);
     }
   };
