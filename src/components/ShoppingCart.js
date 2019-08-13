@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from './../contexts/CartContext';
+import { ProductContext } from './../contexts/ProductContext';
 
 // Components
 import Item from './ShoppingCartItem';
 
-const ShoppingCart = props => {
+const ShoppingCart = () => {
+  const { cart } = useContext(CartContext);
+  const { removeItem } = useContext(ProductContext);
 	const getCartTotal = () => {
-		return props.cart.reduce((acc, value) => {
-			return acc + value.price;
+		return cart.reduce((acc, value) => {
+			return acc + (value.price * value.quantity);
 		}, 0).toFixed(2);
-	};
-
+  };
+  
 	return (
 		<div className="shopping-cart">
-			{props.cart.map(item => (
-				<Item key={item.id} {...item} />
+			{cart.map(item => (
+				<Item key={item.id} {...item} removeItem={removeItem} />
 			))}
 
 			<div className="shopping-cart__checkout">
